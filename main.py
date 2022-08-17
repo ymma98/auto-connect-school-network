@@ -3,7 +3,9 @@ import os
 import sys
 import time
 import requests
-
+# ref: https://zhuanlan.zhihu.com/p/443145372
+# ref: https://github.com/Kingdo777/auto-connect-school-network
+# network authentication: http://172.18.18.60:8080, http, port:8080
 
 def log(info):
     log_file = os.environ.get('AUTO_NET_RECONNECT_LOG_FILE', "connect.log")
@@ -53,7 +55,12 @@ def pong():
 
 
 if __name__ == '__main__':
+    # pyinstaller -F main.py -> get main.exe
+    t_start = time.time()
     while True:
+        t_now = time.time()
+        if t_now-t_start > 60*60:
+            break;
         if pong():
             time.sleep(5)
         else:

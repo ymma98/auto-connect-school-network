@@ -2,6 +2,10 @@
 venv/
 content
 userIndex
-
+build/
+dist/
 *.log
 content*
+__pycache__/
+*.exe
+*.spec
