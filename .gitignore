@@ -1,11 +1,10 @@
 .idea/
 venv/
+dist/
+build/
+*.exe
 content
 userIndex
-build/
-dist/
-*.log
-content*
 __pycache__/
-*.exe
-*.spec
+main.spec
+ping.log

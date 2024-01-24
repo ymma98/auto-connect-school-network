@@ -5,20 +5,20 @@ import time
 import requests
 # ref: https://zhuanlan.zhihu.com/p/443145372
 # ref: https://github.com/Kingdo777/auto-connect-school-network
-# network authentication: http://172.18.18.60:8080, http, port:8080
+
+# pyinstaller -F main.py
+
 
 def log(info):
-    log_file = os.environ.get('AUTO_NET_RECONNECT_LOG_FILE', "connect.log")
-    print(info.strip())
+    log_file = os.environ.get('AUTO_NET_RECONNECT_LOG_FILE')
     with open(log_file, "a") as f:
         f.write(info.strip() + "\n")
 
 
 def login():
-    url = 'http://192.168.50.3:8080/eportal/InterFace.do?method=login'
-    config_file = os.environ.get('AUTO_NET_RECONNECT_CONFIG_FILE', "content")
-    with open(config_file, "r") as f:
-        data = f.read().strip('"').strip("'")
+    url = 'http://172.18.18.60:8080/eportal/InterFace.do?method=login'
+    with open("content", "r") as f:
+        data = f.read()
     header = {
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
     }
@@ -32,8 +32,6 @@ def login():
             log(msg)
             if msg == "认证设备响应超时,请稍后再试!":
                 time.sleep(120)
-            if msg == '正常上网时段为:日常06:00-23:59，请在以上时段内进行认证上网!':
-                time.sleep(1200)
         else:
             log("login at --> " + time.asctime(time.localtime(time.time())))
         return
@@ -55,7 +53,6 @@ def pong():
 
 
 if __name__ == '__main__':
-    # pyinstaller -F main.py -> get main.exe
     t_start = time.time()
     while True:
         t_now = time.time()
@@ -66,3 +63,4 @@ if __name__ == '__main__':
         else:
             login()
             time.sleep(10)
+
